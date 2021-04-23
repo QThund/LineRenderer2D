@@ -1,4 +1,4 @@
-﻿// Copyright 2020 Alejandro Villalba Avila
+// Copyright 2020 Alejandro Villalba Avila
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
 // to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
@@ -128,10 +128,11 @@ namespace Game.Core.Rendering
             SetColorB(m_LineColorB);
             SetThickness(m_LineThickness);
         }
-    
-        protected virtual void OnWillRenderObject()
+
+        protected virtual void LateUpdate()
         {
-            if(m_isPositionsDirty || m_AutoApplyPositionChanges)
+            if (m_camera != null &&
+               (m_isPositionsDirty || m_AutoApplyPositionChanges))
             {
                 m_isPositionsDirty = false;
                 SendPointPositionsToGPU();
@@ -283,7 +284,7 @@ namespace Game.Core.Rendering
             }
 
             // This avoids the pixel blocks of the line to be cut-off
-            float MINIMUM_THICKNESS = m_pixelsPerUnit * m_LineThickness;
+            float MINIMUM_THICKNESS = m_LineThickness / m_pixelsPerUnit;
 
             Vector4 worldBounds = Calculate2DWorldBoundingBox(PointA, PointB);
             worldBounds.x -= MINIMUM_THICKNESS;
