@@ -7,10 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_VectorialLine
-  m_Shader: {fileID: -6465566751694194690, guid: d1d963190acdd054db492da395dc2325,
-    type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_Name: M_BresenhamMultiLineRenderer2D_Unlit
+  m_Shader: {fileID: 4800000, guid: 3b128b3e9dc06314a907f55247273eb6, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA _ISUNLIT_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -36,18 +35,20 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _PackedPoints:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_1F7886E8: 0.34935
-    - Vector1_BE85A36A: 0.3686
     - _EnableExternalAlpha: 0
+    - _IsUnlit: 1
+    - _PackedPointsCount: 0
+    - _PointsCount: 0
     - _Thickness: 4
     m_Colors:
     - _BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _LineColor: {r: 1, g: 0, b: 0, a: 1}
-    - _Origin: {r: 1206, g: 815, b: 0, a: 0}
-    - _PointA: {r: 902, g: 559, b: 0, a: 0}
-    - _PointB: {r: 950, g: 463, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

@@ -7,9 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_VectorialLineUnlit
-  m_Shader: {fileID: -6465566751694194690, guid: bb7efcb24c6226e428bc46166ac9f285,
-    type: 3}
+  m_Name: M_SG_VectorialLineUnlit
+  m_Shader: {fileID: -6465566751694194690, guid: bb7efcb24c6226e428bc46166ac9f285, type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -48,7 +47,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Ints: []
     m_Floats:
     - Vector1_1F7886E8: 0.34935
     - Vector1_BE85A36A: 0.3686

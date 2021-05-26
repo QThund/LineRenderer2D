@@ -7,9 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_BresenhamLine
-  m_Shader: {fileID: -6465566751694194690, guid: 967d524ec3bc60640bca69b40bbbd282,
-    type: 3}
+  m_Name: M_SG_BresenhamLineUnlit
+  m_Shader: {fileID: -6465566751694194690, guid: 6f04203744c9bfb4eb74a04c822e7b68, type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0

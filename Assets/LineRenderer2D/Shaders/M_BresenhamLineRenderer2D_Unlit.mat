@@ -7,10 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_BresenhamMultiLineUnlit
-  m_Shader: {fileID: -6465566751694194690, guid: aa58069941eaf6847aadbc4afa2f775a,
-    type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_Name: M_BresenhamLineRenderer2D_Unlit
+  m_Shader: {fileID: 4800000, guid: e2331b4dc3df5a04ca025d06288aca0b, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA _ISUNLIT_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -21,6 +20,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LineTexture:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -36,37 +39,25 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _PackedPoints:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_Lightmaps:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_LightmapsInd:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_ShadowMasks:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
     m_Floats:
-    - Vector1_1F7886E8: 0.19
-    - Vector1_BE85A36A: 0.3528
+    - _AlphaBlendDst: 10
+    - _AlphaBlendSrc: 1
+    - _BlendOp: 0
+    - _ColorBlendDst: 10
+    - _ColorBlendSrc: 5
+    - _DottedLineLength: 99999
+    - _DottedLineOffset: 0
     - _EnableExternalAlpha: 0
-    - _PackedPointsCount: 0
-    - _PointsCount: 0
+    - _IsUnlit: 1
     - _Thickness: 4
     m_Colors:
     - _BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _LineColor: {r: 1, g: 0, b: 0, a: 1}
-    - _Origin: {r: 1206, g: 815, b: 0, a: 0}
-    - _PointA: {r: 902, g: 559, b: 0, a: 0}
-    - _PointB: {r: 950, g: 463, b: 0, a: 0}
+    - _LineColorA: {r: 1, g: 0, b: 0, a: 1}
+    - _LineColorB: {r: 1, g: 0, b: 0, a: 1}
+    - _OverlayColor: {r: 0, g: 0, b: 0, a: 0}
+    - _PointA: {r: 0, g: 0, b: 0, a: 1}
+    - _PointB: {r: 0, g: 0, b: 0, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

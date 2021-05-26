@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7503196689741130756}
   - component: {fileID: 6781811110391421473}
   m_Layer: 0
-  m_Name: P_Multiline
+  m_Name: P_S_MultiLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,9 @@ MonoBehaviour:
   m_LineColor: {r: 1, g: 0, b: 0, a: 1}
   m_LineThickness: 4
   m_MaxPoints: 16
-  m_AutoApplyPositionChanges: 0
+  m_AutoApplyPositionChanges: 1
+  m_PositionsAreLocalSpace: 0
+  m_camera: {fileID: 0}
 --- !u!212 &6781811110391421473
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -72,7 +74,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 933967d4e6cbe3f4cb299cae46231191, type: 2}
+  - {fileID: 2100000, guid: 652b04d1ed15c234db19815b7611170f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

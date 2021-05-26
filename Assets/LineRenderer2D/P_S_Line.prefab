@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9212615753039092101}
   - component: {fileID: 7583879088528668018}
   m_Layer: 0
-  m_Name: P_Line
+  m_Name: P_S_Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,11 +46,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PointA: {x: -4, y: 4}
   PointB: {x: 4, y: -4}
-  m_AutoApplyPositionChanges: 0
+  m_AutoApplyPositionChanges: 1
   m_Renderer: {fileID: 7583879088528668018}
   m_LineColorA: {r: 1, g: 0, b: 0, a: 1}
   m_LineColorB: {r: 1, g: 0, b: 0, a: 1}
   m_LineThickness: 4
+  m_DottedLineLength: 99999
+  m_DottedLineOffset: 0
+  m_PositionsAreLocalSpace: 0
+  m_UsesVectorialLineMaterial: 0
+  m_camera: {fileID: 0}
 --- !u!212 &7583879088528668018
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -70,7 +75,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 968ed2d6466fdf74db1a557194497e41, type: 2}
+  - {fileID: 2100000, guid: 7bcdb1aa0bd14884a8fefe6dbb5d1b9a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -194,6 +194,8 @@ namespace Game.Core.Rendering
             if(m_packedPointsTexture == null || m_packedPointsTexture.width < m_packedPointsCount)
             {
                 m_packedPointsTexture = new Texture2D(m_packedPointsCount, 1, TextureFormat.RGBAFloat, false, true);
+                m_packedPointsTexture.filterMode = FilterMode.Point;
+                m_packedPointsTexture.wrapMode = TextureWrapMode.Clamp;
             }
 
             m_Renderer.material.SetTexture("_PackedPoints", m_packedPointsTexture);
