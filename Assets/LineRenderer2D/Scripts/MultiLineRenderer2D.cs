@@ -262,7 +262,7 @@ namespace Game.Core.Rendering
             if (transform.parent != null)
             {
                 Vector3 parentScale = transform.parent.localScale;
-                transform.localScale = new Vector3(transform.localScale.x / parentScale.x, transform.localScale.y / parentScale.y, 1.0f);
+                transform.localScale = new Vector3(transform.lossyScale.x / parentScale.x, transform.lossyScale.y / parentScale.y, 1.0f);
             }
         }
 
