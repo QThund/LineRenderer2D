@@ -73,18 +73,12 @@ Shader "Game/S_BresenhamMultiLineRenderer2D"
             };
 
             #include "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/LightingUtility.hlsl"
-            SAMPLER(SamplerState_Point_Clamp);
+
             TEXTURE2D(_MainTex);
             SAMPLER(sampler_MainTex);
             TEXTURE2D(_MaskTex);
             SAMPLER(sampler_MaskTex);
             TEXTURE2D(_PackedPoints);
-            SamplerState sampler_PackedPoints
-            {
-                Filter = MinMapMipPoint;
-                AddressU = Clamp;
-                AddressV = Clamp;
-            };
 
             #if USE_SHAPE_LIGHT_TYPE_0
             SHAPE_LIGHT(0)
@@ -140,7 +134,7 @@ Shader "Game/S_BresenhamMultiLineRenderer2D"
                 float2 pointP = i.screenPos.xy * _ScreenParams.xy;
 
                 bool isPixelInLine = false;
-                IsPixelInLine_float(_Thickness, pointP, _PackedPoints, SamplerState_Point_Clamp, _PackedPointsCount, _PointsCount, isPixelInLine);
+                IsPixelInLine_float(_Thickness, pointP, _PackedPoints, _PackedPointsCount, _PointsCount, isPixelInLine);
 
                 float4 finalColor = isPixelInLine ? _LineColor : _BackgroundColor;
 

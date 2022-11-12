@@ -40,9 +40,6 @@
             "m_Id": "96e4bd65afcdec83b62e24dd16adbb05"
         },
         {
-            "m_Id": "aeee00f2a9987a8f937126e1946bdb09"
-        },
-        {
             "m_Id": "83701acd557c408c93cdeb8b930a3212"
         },
         {
@@ -59,9 +56,6 @@
         },
         {
             "m_Id": "8d1f51bd93cfc984874431e6f4c446c2"
-        },
-        {
-            "m_Id": "b2d557eb41cb00808d54794d3882db52"
         },
         {
             "m_Id": "8a5bc3f0e8329285b2154f3132095e55"
@@ -240,20 +234,6 @@
                     "m_Id": "9014c5a0c4f2868cacb0609cf1fdf702"
                 },
                 "m_SlotId": 8
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "aeee00f2a9987a8f937126e1946bdb09"
-                },
-                "m_SlotId": 0
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "9014c5a0c4f2868cacb0609cf1fdf702"
-                },
-                "m_SlotId": 9
             }
         },
         {
@@ -580,30 +560,6 @@
 {
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
-    "m_ObjectId": "08697c6f2fb54b8bb84f0f09891f452e",
-    "m_Id": 0,
-    "m_DisplayName": "Out",
-    "m_SlotType": 1,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Out",
-    "m_StageCapability": 3,
-    "m_Value": {
-        "x": 0.0,
-        "y": 0.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0
-    },
-    "m_Labels": [
-        "X",
-        "Y"
-    ]
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
     "m_ObjectId": "0a897d059fbc6d88976caa5f14611ca3",
     "m_Id": 0,
     "m_DisplayName": "Out",
@@ -677,23 +633,6 @@
 {
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "1babb81072071e8a9bb07fa19e949b32",
-    "m_Id": 1,
-    "m_DisplayName": "X",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "X",
-    "m_StageCapability": 3,
-    "m_Value": 0.0,
-    "m_DefaultValue": 0.0,
-    "m_Labels": [
-        "X"
-    ]
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "1baf1a3fc04d5284aa2980ab24abdf1c",
     "m_Id": 11,
     "m_DisplayName": "fPointsCount",
@@ -723,19 +662,6 @@
     "m_Labels": [
         "W"
     ]
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.SamplerStateMaterialSlot",
-    "m_ObjectId": "224065d555acda8eb1b7138aee7d7b9d",
-    "m_Id": 0,
-    "m_DisplayName": "Out",
-    "m_SlotType": 1,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Out",
-    "m_StageCapability": 3,
-    "m_BareResource": false
 }
 
 {
@@ -1116,8 +1042,6 @@
         "m_GuidSerialized": "700e03f3-1877-467c-81d7-2528455a8e32"
     },
     "m_Name": "PointsCount",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_E38B6C96",
     "m_OverrideReferenceName": "_PointsCount",
     "m_GeneratePropertyBlock": true,
@@ -1141,8 +1065,6 @@
         "m_GuidSerialized": "fe3267dc-793a-4eab-8a66-ab96f9c4e170"
     },
     "m_Name": "Thickness",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_C9934729",
     "m_OverrideReferenceName": "_Thickness",
     "m_GeneratePropertyBlock": true,
@@ -1229,19 +1151,6 @@
         "z": 0.0,
         "w": 0.0
     }
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.SamplerStateMaterialSlot",
-    "m_ObjectId": "6d47918978e49e838b5cd5e78b6f720c",
-    "m_Id": 9,
-    "m_DisplayName": "ssArraySampler",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "ssArraySampler",
-    "m_StageCapability": 3,
-    "m_BareResource": true
 }
 
 {
@@ -1617,9 +1526,6 @@
             "m_Id": "b6a85b43b71fb280b890c23b369e010a"
         },
         {
-            "m_Id": "6d47918978e49e838b5cd5e78b6f720c"
-        },
-        {
             "m_Id": "b689abf1482b1a84a1d10e23ef23f3c6"
         },
         {
@@ -1637,23 +1543,6 @@
     "m_FunctionName": "IsPixelInLine",
     "m_FunctionSource": "c30e52e366906904e81bd7541e6c0e8a",
     "m_FunctionBody": "// The amount of pixels the camera has moved regarding a thickness-wide block of pixels\r\nvOrigin = fmod(vOrigin, float2(fThickness, fThickness));\r\nvOrigin = round(vOrigin);\r\n\r\nfor(int i = 0; i < 16; ++i)\n{\r\n    vOrigin = vOrigin;\n}\r\n\r\n// This moves the line N pixels, this is necessary due to the camera moves 1 pixel each time and the line may be wider than 1 pixel\r\n// so this avoids the line jumping from one block (thickness-wide) to the next, and instead its movement is smoother by moving pixel by pixel\r\nvPointP += float2(fThickness, fThickness) - vOrigin;\r\n\r\nvEndpointA += float2(fThickness, fThickness) - vOrigin;\r\nvEndpointB += float2(fThickness, fThickness) - vOrigin;\r\n\r\nvEndpointA = vEndpointA - fmod(vEndpointA, float2(fThickness, fThickness));\r\nvEndpointB = vEndpointB - fmod(vEndpointB, float2(fThickness, fThickness));\r\nvEndpointA = round(vEndpointA);\r\nvEndpointB = round(vEndpointB);\r\n\r\nvPointP = vPointP - fmod(vPointP, float2(fThickness, fThickness));\r\nvPointP = round(vPointP);\r\n\r\nint x = (vEndpointA.x);\r\nint y = (vEndpointA.y);\r\nint x2 = (vEndpointB.x);\r\nint y2 = (vEndpointB.y);\r\nint pX = (vPointP.x);\r\nint pY = (vPointP.y);\r\nint w = x2 - x;\r\nint h = y2 - y;\r\nint dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0;\r\n\r\nif (w<0) dx1 = -fThickness ; else if (w>0) dx1 = fThickness;\r\nif (h<0) dy1 = -fThickness ; else if (h>0) dy1 = fThickness;\r\nif (w<0) dx2 = -fThickness ; else if (w>0) dx2 = fThickness;\r\n\r\nint longest = abs(w);\r\nint shortest = abs(h);\r\n\r\nif (longest <= shortest)\r\n{\r\n    longest = abs(h);\r\n    shortest = abs(w);\r\n\r\n    if (h < 0)\r\n        dy2 = -fThickness; \r\n    else if (h > 0)\r\n        dy2 = fThickness;\r\n\t\r\n    dx2 = 0;\r\n}\r\n\r\nint numerator = longest >> 1;\r\n\r\noutIsPixelInLine = false;\r\n\r\nfor (int i=0; i <= longest; i+=fThickness)\r\n{\r\n    if(x == pX && y == pY)\r\n    {\r\n        outIsPixelInLine = true;\r\n        break;\r\n    }\r\n\r\n    numerator += shortest;\r\n\r\n    if (numerator >= longest)\r\n    {\r\n        numerator -= longest;\r\n        x += dx1;\r\n        y += dy1;\r\n    }\r\n    else\r\n    {\r\n        x += dx2;\r\n        y += dy2;\r\n    }\r\n}\r\n\r\n"
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "9028a74ccc9d6280aaec4ba189dca8f7",
-    "m_Id": 2,
-    "m_DisplayName": "Y",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Y",
-    "m_StageCapability": 3,
-    "m_Value": 0.0,
-    "m_DefaultValue": 0.0,
-    "m_Labels": [
-        "Y"
-    ]
 }
 
 {
@@ -1898,8 +1787,6 @@
         "m_GuidSerialized": "bdd15eba-6ba3-44ab-b6fe-a96c89f9c750"
     },
     "m_Name": "MainTex",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Texture2D_D1D16593",
     "m_OverrideReferenceName": "_MainTex",
     "m_GeneratePropertyBlock": true,
@@ -2080,82 +1967,6 @@
 }
 
 {
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.SamplerStateNode",
-    "m_ObjectId": "aeee00f2a9987a8f937126e1946bdb09",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Sampler State",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": -1024.0,
-            "y": 429.0,
-            "width": 145.0,
-            "height": 140.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "224065d555acda8eb1b7138aee7d7b9d"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_filter": 1,
-    "m_wrap": 1
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector2Node",
-    "m_ObjectId": "b2d557eb41cb00808d54794d3882db52",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Vector 2",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": -987.0,
-            "y": 351.0000305175781,
-            "width": 109.0,
-            "height": 34.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "1babb81072071e8a9bb07fa19e949b32"
-        },
-        {
-            "m_Id": "9028a74ccc9d6280aaec4ba189dca8f7"
-        },
-        {
-            "m_Id": "08697c6f2fb54b8bb84f0f09891f452e"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_Value": {
-        "x": 0.0,
-        "y": 0.0
-    }
-}
-
-{
     "m_SGVersion": 2,
     "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
     "m_ObjectId": "b3b98d89d5c6ff8c87c7b61b61461dc3",
@@ -2163,8 +1974,6 @@
         "m_GuidSerialized": "d5eb01d4-4305-4002-bded-cfadd4e716df"
     },
     "m_Name": "LineColor",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Color_3644C05D",
     "m_OverrideReferenceName": "_LineColor",
     "m_GeneratePropertyBlock": true,
@@ -2268,8 +2077,6 @@
         "m_GuidSerialized": "632c3a05-1e9d-452b-ac01-c2b50ebe84c0"
     },
     "m_Name": "BackgroundColor",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Color_90D47017",
     "m_OverrideReferenceName": "_BackgroundColor",
     "m_GeneratePropertyBlock": true,
@@ -2333,8 +2140,6 @@
         "m_GuidSerialized": "867a3b61-182a-40dd-aa37-61f120d137e5"
     },
     "m_Name": "PackedPointsCount",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_36381085",
     "m_OverrideReferenceName": "_PackedPointsCount",
     "m_GeneratePropertyBlock": true,
@@ -2771,8 +2576,6 @@
         "m_GuidSerialized": "ffe5f964-6873-427b-9015-fb5414f21803"
     },
     "m_Name": "PackedPoints",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Texture2D_DF477B23",
     "m_OverrideReferenceName": "_PackedPoints",
     "m_GeneratePropertyBlock": true,
