@@ -11,7 +11,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS  
 // IN THE SOFTWARE. 
 
-void IsPixelInLine_float(float fThickness, float2 vPointP, Texture2D tPackedPoints, SamplerState ssArraySampler, float fPackedPointsCount, float fPointsCount, out bool outIsPixelInLine)
+void IsPixelInLine_float(float fThickness, float2 vPointP, Texture2D tPackedPoints, float fPackedPointsCount, float fPointsCount, out bool outIsPixelInLine)
 {
 	// Origin in screen space
 	float4 projectionSpaceOrigin = mul(UNITY_MATRIX_VP, float4(0.0f, 0.0f, 0.0f, 1.0f));
@@ -34,9 +34,10 @@ void IsPixelInLine_float(float fThickness, float2 vPointP, Texture2D tPackedPoin
 		
 	for(int t = 0; t < pointsCount - 1; ++t)
 	{
-		float4 packedPoints = tPackedPoints.Sample(ssArraySampler, float2(float(t / 2) / fPackedPointsCount, 0.0f));
-		float4 packedPoints2 = tPackedPoints.Sample(ssArraySampler, float2(float(t / 2 + 1) / fPackedPointsCount, 0.0f));
-		
+		int xCoord = floor(t / 2.0f);
+		float4 packedPoints = tPackedPoints.Load(int3(xCoord, 0, 0));
+		float4 packedPoints2 = tPackedPoints.Load(int3(xCoord + 1, 0, 0));
+
 		float2 worldSpaceEndpointA = fmod(t, 2) == 0 ? packedPoints.rg : packedPoints.ba;
 		float2 worldSpaceEndpointB = fmod(t, 2) == 0 ? packedPoints.ba : packedPoints2.rg;
 		float4 projectionSpaceEndpointA = mul(UNITY_MATRIX_VP, float4(worldSpaceEndpointA.x, worldSpaceEndpointA.y, 0.0f, 1.0f));
