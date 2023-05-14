@@ -226,7 +226,13 @@ Shader "Game/S_VectorialLineRenderer2D"
                 if (_IsUnlit == 0.0f)
                 {
                     // Lighting
-                    finalColor = CombinedShapeLightShared(finalColor, maskColor, i.screenPos);
+                    SurfaceData2D surfaceData;
+                    InputData2D inputData;
+                    surfaceData.albedo = finalColor.rgb;
+                    surfaceData.alpha = 1;
+                    surfaceData.mask = maskColor;
+                    inputData.uv = i.screenPos;
+                    finalColor = half4(CombinedShapeLightShared(surfaceData, inputData).rgb, finalColor.a);
                 }
 
                 return finalColor;
