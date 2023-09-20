@@ -158,6 +158,9 @@ Shader "Game/S_BresenhamLineRenderer2D"
                 IsPixelInLine_float(_PointA.xy, _PointB.xy, _Thickness, pointP, _DottedLineLength, _DottedLineOffset, isPixelInLine);
 
                 float4 finalColor = isPixelInLine ? pointColor : _BackgroundColor;
+
+                clip(finalColor.a == 0.0f ? -1.0f : 1.0f);
+
                 finalColor *= SAMPLE_TEXTURE2D(_LineTexture, sampler_LineTexture, i.uv * _LineTexture_ST.xy + _LineTexture_ST.zw);
 
                 if (_IsUnlit == 0.0f)

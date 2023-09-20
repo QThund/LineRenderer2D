@@ -140,6 +140,8 @@ Shader "Game/S_BresenhamMultiLineRenderer2D"
 
                 float4 finalColor = isPixelInLine ? _LineColor : _BackgroundColor;
 
+                clip(finalColor.a == 0.0f ? -1.0f : 1.0f);
+
                 if (_IsUnlit == 0.0f)
                 {
                     // Lighting

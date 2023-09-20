@@ -219,6 +219,9 @@ Shader "Game/S_VectorialLineRenderer2D"
                 IsPixelInLine(_PointA.xy, _PointB.xy, _Thickness, pointP, distanceCorrection, _Origin.xy, isPixelInLine);
 
                 float4 finalColor = isPixelInLine ? _LineColor : _BackgroundColor;
+
+                clip(finalColor.a == 0.0f ? -1.0f : 1.0f);
+
                 bool isEmissive = _IsUnlit;
 
                 if (_IsUnlit == 0.0f)
