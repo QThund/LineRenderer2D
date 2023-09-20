@@ -42,10 +42,8 @@ Shader "Game/S_VectorialLineRenderer2D"
     {
         Tags {"Queue" = "Transparent" "RenderType" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
 
-        BlendOp[_BlendOp]
-        Blend 0 [_ColorBlendSrc][_ColorBlendDst],[_AlphaBlendSrc][_AlphaBlendDst]
-        Blend 1 [_ColorBlendSrc][_ColorBlendDst],[_AlphaBlendSrc][_AlphaBlendDst]
-        Blend 2 Zero One
+        BlendOp Add
+        Blend 0 SrcAlpha OneMinusSrcAlpha
         Cull Off
         ZTest LEqual
         ZWrite Off

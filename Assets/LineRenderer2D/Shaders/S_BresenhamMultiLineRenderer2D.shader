@@ -40,6 +40,8 @@ Shader "Game/S_BresenhamMultiLineRenderer2D"
     {
         Tags {"Queue" = "Transparent" "RenderType" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
 
+        BlendOp Add
+        Blend 0 SrcAlpha OneMinusSrcAlpha
         Cull Off
         //ZTest LEqual
         ZWrite Off

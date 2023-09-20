@@ -43,6 +43,8 @@ Shader "Game/S_BresenhamLineRenderer2D"
     {
         Tags {"Queue" = "Transparent" "RenderType" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
 
+        BlendOp Add
+        Blend 0 SrcAlpha OneMinusSrcAlpha
         Cull Off
         ZTest LEqual
         ZWrite Off
@@ -102,6 +104,7 @@ Shader "Game/S_BresenhamLineRenderer2D"
 
             CBUFFER_START(UnityPerMaterial)
                 float4 _MainTex_ST;
+                float4 _LineTexture_ST;
                 float _IsUnlit;
                 float4 _PointA;
                 float4 _PointB;
@@ -155,7 +158,7 @@ Shader "Game/S_BresenhamLineRenderer2D"
                 IsPixelInLine_float(_PointA.xy, _PointB.xy, _Thickness, pointP, _DottedLineLength, _DottedLineOffset, isPixelInLine);
 
                 float4 finalColor = isPixelInLine ? pointColor : _BackgroundColor;
-                finalColor *= SAMPLE_TEXTURE2D(_LineTexture, sampler_LineTexture, i.uv);
+                finalColor *= SAMPLE_TEXTURE2D(_LineTexture, sampler_LineTexture, i.uv * _LineTexture_ST.xy + _LineTexture_ST.zw);
 
                 if (_IsUnlit == 0.0f)
                 {

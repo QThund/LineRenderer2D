@@ -11,22 +11,26 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
 // IN THE SOFTWARE.
 
-//using Sirenix.OdinInspector;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Game.Core.Rendering
 {
     /// <summary>
     /// 
     /// </summary>
+    [ExecuteAlways]
     public class LineRenderer2D : MonoBehaviour
     {
-        //[FoldoutGroup("Settings")]
+        [Tooltip("The position of the endpoint A. Its world position depends on whether the Local Space options is enabled.")]
         public Vector2 PointA;
 
-        //[FoldoutGroup("Settings")]
+        [Tooltip("The position of the endpoint B. Its world position depends on whether the Local Space options is enabled.")]
         public Vector2 PointB;
-    
+
         public Color LineColorA
         {
             get
@@ -47,94 +51,210 @@ namespace Game.Core.Rendering
         {
             get
             {
-                return m_camera;
+                return m_Camera
+#if UNITY_EDITOR
+                                == null ? m_editorCamera : m_Camera
+#endif
+                       ;
             }
 
             set
             {
-                m_camera = value;
-                int screenHeight = (int)m_camera.orthographicSize * 2;
-                m_pixelsPerUnit = m_camera.pixelHeight / screenHeight;
+                m_Camera = value;
+                int screenHeight = (int)m_Camera.orthographicSize * 2;
+                m_pixelsPerUnit = m_Camera.pixelHeight / screenHeight;
             }
         }
 
         [Tooltip("When enabled, the position of the points is sent to the GPU once per frame without having to apply the changes.")]
-        //[FoldoutGroup("Settings")]
         [SerializeField]
         protected bool m_AutoApplyPositionChanges;
 
         [Tooltip("The sprite renderer that defines the area of the screen where the line is to be drawn.")]
-        //[FoldoutGroup("Settings")]
         [SerializeField]
         protected SpriteRenderer m_Renderer;
 
         [Tooltip("The color of the line at the endpoint A. If the color of the point B is different, the line will be filled with a color gradient.")]
-        //[OnValueChanged("SetColorA")]
-        //[FoldoutGroup("Settings")]
         [SerializeField]
         protected Color m_LineColorA = Color.red;
 
         [Tooltip("The color of the line at the endpoint B. If the color of the point A is different, the line will be filled with a color gradient.")]
-        //[OnValueChanged("SetColorB")]
-        //[FoldoutGroup("Settings")]
         [SerializeField]
         protected Color m_LineColorB = Color.red;
 
+        [Tooltip("The color used in the area of the quad that is not filled with the line.")]
+        [SerializeField]
+        protected Color m_BackgroundColor = Color.clear;
+
         [Tooltip("The width of every point in the line, in pixels.")]
-        //[OnValueChanged("SetThickness")]
-        //[FoldoutGroup("Settings")]
+        [Min(0.0001f)]
         [SerializeField]
         protected float m_LineThickness = 4.0f;
 
         [Tooltip("The length of the dots of the line. Use big numbers to draw a continuous line.")]
-        //[OnValueChanged("SetDottedLineLength")]
-        //[FoldoutGroup("Settings")]
         [SerializeField]
         protected float m_DottedLineLength = 99999.0f;
 
         [Tooltip("The offset of the dots of the line.")]
-        //[OnValueChanged("SetDottedLineOffset")]
-        //[FoldoutGroup("Settings")]
         [SerializeField]
         protected float m_DottedLineOffset = 0.0f;
 
-        [Tooltip("Whan enabled, the world position of the parent is added to the position of the points which is assumed to be local.")]
-        //[FoldoutGroup("Settings")]
+        [Tooltip("When enabled, the world position of the parent is added to the position of the points which is assumed to be local.")]
         [SerializeField]
         protected bool m_PositionsAreLocalSpace = false;
 
         [Tooltip("Enable this when the line is drawn using the vectorial technique.")]
-        //[FoldoutGroup("Settings")]
         [SerializeField]
         protected bool m_UsesVectorialLineMaterial;
 
-        [Tooltip("The detected pixels per Unity spacial unit.")]
-        //[FoldoutGroup("Status")]
-        //[ShowInInspector]
-        //[ReadOnly]
-        protected int m_pixelsPerUnit;
-
+        [Tooltip("A texture to draw on the line.")]
         [SerializeField]
-        protected Camera m_camera;
+        protected Texture2D m_LineTexture;
 
+        [Tooltip("The tiling settings for the line texture.")]
+        [SerializeField]
+        protected Vector2 m_LineTextureTiling = Vector2.one;
+
+        [Tooltip("The offset settings for the line texture.")]
+        [SerializeField]
+        protected Vector2 m_LineTextureOffset = Vector2.zero;
+
+        [Tooltip("The camera used for calculating the actual thickness on screen.")]
+        [SerializeField]
+        protected Camera m_Camera;
+
+        protected int PixelsPerUnit
+        {
+            get
+            {
+#if UNITY_EDITOR
+
+                if(!Application.isPlaying && m_editorCamera != null)
+                {
+                    return m_editorCamera.pixelHeight / ((int)m_editorCamera.orthographicSize * 2);
+                }
+
+#endif
+                
+                return m_pixelsPerUnit;
+            }
+        }
+
+        protected int m_pixelsPerUnit;
         protected bool m_isPositionsDirty = false;
+        protected MaterialPropertyBlock m_materialPropertyBlock;
+
+#if UNITY_EDITOR
+
+        protected Camera m_editorCamera;
+
+#endif
+
+        protected static class ShaderParams
+        {
+            public static int LineColorA = Shader.PropertyToID("_LineColorA");
+            public static int LineColorB = Shader.PropertyToID("_LineColorB");
+            public static int LineColor = Shader.PropertyToID("_LineColor");
+            public static int Thickness = Shader.PropertyToID("_Thickness");
+            public static int DottedLineLength = Shader.PropertyToID("_DottedLineLength");
+            public static int DottedLineOffset = Shader.PropertyToID("_DottedLineOffset");
+            public static int BackgroundColor = Shader.PropertyToID("_BackgroundColor");
+            public static int LineTexture = Shader.PropertyToID("_LineTexture");
+            public static int LineTexture_ST = Shader.PropertyToID("_LineTexture_ST");
+            public static int Origin = Shader.PropertyToID("_Origin");
+            public static int PointA = Shader.PropertyToID("_PointA");
+            public static int PointB = Shader.PropertyToID("_PointB");
+        }
 
         protected virtual void Start()
         {
-            CurrentCamera = m_camera;
+            if(!Application.isPlaying)
+            {
+                return;
+            }
+
+            int screenHeight = (int)CurrentCamera.orthographicSize * 2;
+            m_pixelsPerUnit = CurrentCamera.pixelHeight / screenHeight;
 
             ApplyPointPositionChanges();
-            SetColorA(m_LineColorA);
-            SetColorB(m_LineColorB);
-            SetThickness(m_LineThickness);
+
+            if (CurrentCamera != null)
+            {
+                RefreshMaterial();
+            }
+        }
+
+        protected virtual void OnEnable()
+        {
+            if(m_materialPropertyBlock == null)
+            {
+                m_materialPropertyBlock = new MaterialPropertyBlock();
+            }
+
+            if(CurrentCamera != null)
+            {
+                RefreshMaterial();
+            }
         }
 
         protected virtual void LateUpdate()
         {
-            if (m_camera != null &&
+            if(CurrentCamera != null && 
                (m_isPositionsDirty || m_AutoApplyPositionChanges))
             {
                 m_isPositionsDirty = false;
+                SendPointPositionsToGPU();
+            }
+        }
+
+#if UNITY_EDITOR
+
+        protected virtual void OnRenderObject()
+        {
+            if (m_editorCamera == null && !Application.isPlaying)
+            {
+                Camera[] sceneCameras = SceneView.GetAllSceneCameras();
+
+                if (sceneCameras.Length > 0)
+                {
+                    m_editorCamera = sceneCameras[0];
+                    OnEnable();
+                }
+            }
+
+            if(m_UsesVectorialLineMaterial && !Application.isPlaying)
+            {
+                SendPointPositionsToGPU();
+            }
+        }
+
+#endif
+
+        protected virtual void RefreshMaterial()
+        {
+            m_Renderer.GetPropertyBlock(m_materialPropertyBlock);
+
+            m_materialPropertyBlock.SetColor(ShaderParams.LineColorA, m_LineColorA);
+            m_materialPropertyBlock.SetColor(ShaderParams.LineColorB, m_LineColorB);
+            m_materialPropertyBlock.SetFloat(ShaderParams.Thickness, m_LineThickness);
+            m_materialPropertyBlock.SetFloat(ShaderParams.DottedLineLength, m_DottedLineLength);
+            m_materialPropertyBlock.SetFloat(ShaderParams.DottedLineOffset, m_DottedLineOffset);
+            m_materialPropertyBlock.SetColor(ShaderParams.BackgroundColor, m_BackgroundColor);
+            m_materialPropertyBlock.SetColor(ShaderParams.LineColor, m_LineColorA);
+
+            if (m_LineTexture != null)
+            {
+                m_materialPropertyBlock.SetTexture(ShaderParams.LineTexture, m_LineTexture);
+            }
+            else
+            {
+                m_materialPropertyBlock.SetTexture(ShaderParams.LineTexture, Texture2D.whiteTexture);
+            }
+
+            m_materialPropertyBlock.SetVector(ShaderParams.LineTexture_ST, new Vector4(m_LineTextureTiling.x, m_LineTextureTiling.y, m_LineTextureOffset.x, m_LineTextureOffset.y));
+
+            if(!Application.isPlaying || m_AutoApplyPositionChanges)
+            {
                 SendPointPositionsToGPU();
             }
         }
@@ -147,14 +267,9 @@ namespace Game.Core.Rendering
         {
             m_LineColorA = newLineColor;
 
-            if (Application.isPlaying)
-            {
-                m_Renderer.material.SetColor("_LineColorA", m_LineColorA);
-            }
-            else
-            {
-                m_Renderer.sharedMaterial.SetColor("_LineColorA", m_LineColorA);
-            }
+            m_materialPropertyBlock.SetColor(ShaderParams.LineColorA, m_LineColorA);
+            m_materialPropertyBlock.SetColor(ShaderParams.LineColor, m_LineColorA);
+            m_Renderer.SetPropertyBlock(m_materialPropertyBlock);
         }
 
         /// <summary>
@@ -165,14 +280,8 @@ namespace Game.Core.Rendering
         {
             m_LineColorB = newLineColor;
 
-            if(Application.isPlaying)
-            {
-                m_Renderer.material.SetColor("_LineColorB", m_LineColorB);
-            }
-            else
-            {
-                m_Renderer.sharedMaterial.SetColor("_LineColorB", m_LineColorB);
-            }
+            m_materialPropertyBlock.SetColor(ShaderParams.LineColorB, m_LineColorB);
+            m_Renderer.SetPropertyBlock(m_materialPropertyBlock);
         }
 
         /// <summary>
@@ -183,14 +292,8 @@ namespace Game.Core.Rendering
         {
             m_LineThickness = newThickness;
 
-            if (Application.isPlaying)
-            {
-                m_Renderer.material.SetFloat("_Thickness", m_LineThickness);
-            }
-            else
-            {
-                m_Renderer.sharedMaterial.SetFloat("_Thickness", m_LineThickness);
-            }
+            m_materialPropertyBlock.SetFloat(ShaderParams.Thickness, m_LineThickness);
+            m_Renderer.SetPropertyBlock(m_materialPropertyBlock);
         }
 
         /// <summary>
@@ -201,14 +304,8 @@ namespace Game.Core.Rendering
         {
             m_DottedLineLength = newDottedLineLength;
 
-            if (Application.isPlaying)
-            {
-                m_Renderer.material.SetFloat("_DottedLineLength", m_DottedLineLength);
-            }
-            else
-            {
-                m_Renderer.sharedMaterial.SetFloat("_DottedLineLength", m_DottedLineLength);
-            }
+            m_materialPropertyBlock.SetFloat(ShaderParams.DottedLineLength, m_DottedLineLength);
+            m_Renderer.SetPropertyBlock(m_materialPropertyBlock);
         }
 
         /// <summary>
@@ -219,14 +316,8 @@ namespace Game.Core.Rendering
         {
             m_DottedLineOffset = newDottedLineOffset;
 
-            if (Application.isPlaying)
-            {
-                m_Renderer.material.SetFloat("_DottedLineOffset", m_DottedLineOffset);
-            }
-            else
-            {
-                m_Renderer.sharedMaterial.SetFloat("_DottedLineOffset", m_DottedLineOffset);
-            }
+            m_materialPropertyBlock.SetFloat(ShaderParams.DottedLineOffset, m_DottedLineOffset);
+            m_Renderer.SetPropertyBlock(m_materialPropertyBlock);
         }
 
         /// <summary>
@@ -236,7 +327,62 @@ namespace Game.Core.Rendering
         /// <param name="newOffset"></param>
         public void SetTextureTilingAndOffset(Vector2 newTiling, Vector2 newOffset)
         {
-            m_Renderer.material.SetVector("_MainTex_ST", new Vector4(newTiling.x, newTiling.y, newOffset.x, newOffset.y));
+            m_materialPropertyBlock.SetVector(ShaderParams.LineTexture_ST, new Vector4(newTiling.x, newTiling.y, newOffset.x, newOffset.y));
+            m_Renderer.SetPropertyBlock(m_materialPropertyBlock);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newBackgroundColor"></param>
+        public void SetBackgroundColor(Color newBackgroundColor)
+        {
+            m_BackgroundColor = newBackgroundColor;
+
+            m_materialPropertyBlock.SetColor(ShaderParams.BackgroundColor, m_BackgroundColor);
+            m_Renderer.SetPropertyBlock(m_materialPropertyBlock);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newTexture"></param>
+        public void SetLineTexture(Texture2D newTexture)
+        {
+            m_LineTexture = newTexture;
+
+            if (m_LineTexture != null)
+            {
+                m_materialPropertyBlock.SetTexture(ShaderParams.LineTexture, m_LineTexture);
+            }
+            else
+            {
+                m_materialPropertyBlock.SetTexture(ShaderParams.LineTexture, Texture2D.whiteTexture);
+            }
+
+            m_Renderer.SetPropertyBlock(m_materialPropertyBlock);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newLineTextureTiling"></param>
+        public void SetLineTextureTiling(Vector2 newLineTextureTiling)
+        {
+            m_LineTextureTiling = newLineTextureTiling;
+
+            SetTextureTilingAndOffset(m_LineTextureTiling, m_LineTextureOffset);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newLineTextureOffset"></param>
+        public void SetLineTextureOffset(Vector2 newLineTextureOffset)
+        {
+            m_LineTextureOffset = newLineTextureOffset;
+
+            SetTextureTilingAndOffset(m_LineTextureTiling, m_LineTextureOffset);
         }
 
         /// <summary>
@@ -258,18 +404,34 @@ namespace Game.Core.Rendering
 
             if(m_UsesVectorialLineMaterial)
             {
-                m_Renderer.material.SetVector("_PointA", (Vector2)m_camera.WorldToScreenPoint(PointA + parentPosition));
-                m_Renderer.material.SetVector("_PointB", (Vector2)m_camera.WorldToScreenPoint(PointB + parentPosition));
+                m_materialPropertyBlock.SetVector(ShaderParams.PointA, (Vector2)CurrentCamera.WorldToScreenPoint(PointA + parentPosition));
+                m_materialPropertyBlock.SetVector(ShaderParams.PointB, (Vector2)CurrentCamera.WorldToScreenPoint(PointB + parentPosition));
 
-                Vector2 origin = m_camera.WorldToScreenPoint(Vector2.zero);
+                Vector2 origin = CurrentCamera.WorldToScreenPoint(Vector2.zero);
+
+#if UNITY_EDITOR
+
+                // This allows to draw the line on the scene view at the proper position
+                if(!Application.isPlaying && m_editorCamera != null)
+                {
+                    origin = m_editorCamera.WorldToScreenPoint(Vector2.zero);
+
+                    m_materialPropertyBlock.SetVector(ShaderParams.PointA, (Vector2)m_editorCamera.WorldToScreenPoint(PointA + parentPosition));
+                    m_materialPropertyBlock.SetVector(ShaderParams.PointB, (Vector2)m_editorCamera.WorldToScreenPoint(PointB + parentPosition));
+                }
+
+#endif
+
                 origin = new Vector2(Mathf.Round(origin.x), Mathf.Round(origin.y));
-                m_Renderer.material.SetVector("_Origin", origin);
+                m_materialPropertyBlock.SetVector(ShaderParams.Origin, origin);
             }
             else
             {
-                m_Renderer.material.SetVector("_PointA", PointA + parentPosition);
-                m_Renderer.material.SetVector("_PointB", PointB + parentPosition);
+                m_materialPropertyBlock.SetVector(ShaderParams.PointA, PointA + parentPosition);
+                m_materialPropertyBlock.SetVector(ShaderParams.PointB, PointB + parentPosition);
             }
+
+            m_Renderer.SetPropertyBlock(m_materialPropertyBlock);
 
             RefreshSpriteTransform();
         }
@@ -284,14 +446,15 @@ namespace Game.Core.Rendering
             }
 
             // This avoids the pixel blocks of the line to be cut-off
-            float MINIMUM_THICKNESS = m_LineThickness / m_pixelsPerUnit;
+            float MINIMUM_THICKNESS = PixelsPerUnit == 0 ? m_LineThickness 
+                                                         : m_LineThickness / PixelsPerUnit;
 
             Vector4 worldBounds = Calculate2DWorldBoundingBox(PointA, PointB);
             worldBounds.x -= MINIMUM_THICKNESS;
             worldBounds.y += MINIMUM_THICKNESS;
             worldBounds.z += 2 * MINIMUM_THICKNESS;
             worldBounds.w += 2 * MINIMUM_THICKNESS;
-            transform.localScale = new Vector2(worldBounds.z, worldBounds.w);
+            transform.localScale = new Vector3(worldBounds.z, worldBounds.w, 1.0f);
             transform.position = new Vector2(worldBounds.x + parentPosition.x, worldBounds.y + parentPosition.y);
             transform.rotation = Quaternion.identity;
 
@@ -341,13 +504,93 @@ namespace Game.Core.Rendering
             }
 
             Gizmos.color = Color.cyan;
-            Gizmos.DrawRay(PointA + parentPosition, Vector2.up * 5.0f);
-            Gizmos.DrawRay(PointA + parentPosition, Vector2.right * 5.0f);
-            Gizmos.DrawRay(PointB + parentPosition, Vector2.up * 5.0f);
-            Gizmos.DrawRay(PointB + parentPosition, Vector2.right * 5.0f);
+            Gizmos.DrawRay(PointA + parentPosition, Vector2.up);
+            Gizmos.DrawRay(PointA + parentPosition, Vector2.right);
+            Gizmos.DrawRay(PointB + parentPosition, Vector2.up);
+            Gizmos.DrawRay(PointB + parentPosition, Vector2.right);
 
             Gizmos.color = Color.magenta;
             Gizmos.DrawLine(PointA + parentPosition, PointB + parentPosition);
+        }
+
+        [CustomEditor(typeof(LineRenderer2D))]
+        protected class LineRenderer2DEditor : UnityEditor.Editor
+        {
+            private static class Texts
+            {
+                public static GUIContent PixelsPerUnit = new GUIContent("Pixels per unit: ", "The detected pixels per Unity spacial unit.");
+            }
+            
+            protected SerializedProperty m_pointA;
+            protected SerializedProperty m_pointB;
+            protected SerializedProperty m_lineColorA;
+            protected SerializedProperty m_lineColorB;
+            protected SerializedProperty m_lineThickness;
+            protected SerializedProperty m_dottedLineLength;
+            protected SerializedProperty m_dottedLineOffset;
+            protected SerializedProperty m_backgroundColor;
+            protected SerializedProperty m_lineTexture;
+            protected SerializedProperty m_lineTextureTiling;
+            protected SerializedProperty m_lineTextureOffset;
+            protected SerializedProperty m_positionsAreLocalSpace;
+            protected SerializedProperty m_autoApplyPositionChanges;
+            protected SerializedProperty m_usesVectorialLineMaterial;
+            protected SerializedProperty m_camera;
+            protected SerializedProperty m_renderer;
+
+            protected void OnEnable()
+            {
+                m_pointA = serializedObject.FindProperty("PointA");
+                m_pointB = serializedObject.FindProperty("PointB");
+                m_lineColorA = serializedObject.FindProperty("m_LineColorA");
+                m_lineColorB = serializedObject.FindProperty("m_LineColorB");
+                m_lineThickness = serializedObject.FindProperty("m_LineThickness");
+                m_dottedLineLength = serializedObject.FindProperty("m_DottedLineLength");
+                m_dottedLineOffset = serializedObject.FindProperty("m_DottedLineOffset");
+                m_backgroundColor = serializedObject.FindProperty("m_BackgroundColor");
+                m_lineTexture = serializedObject.FindProperty("m_LineTexture");
+                m_lineTextureTiling = serializedObject.FindProperty("m_LineTextureTiling");
+                m_lineTextureOffset = serializedObject.FindProperty("m_LineTextureOffset");
+                m_positionsAreLocalSpace = serializedObject.FindProperty("m_PositionsAreLocalSpace");
+                m_autoApplyPositionChanges = serializedObject.FindProperty("m_AutoApplyPositionChanges");
+                m_usesVectorialLineMaterial = serializedObject.FindProperty("m_UsesVectorialLineMaterial");
+                m_camera = serializedObject.FindProperty("m_Camera");
+                m_renderer = serializedObject.FindProperty("m_Renderer");
+            }
+
+            public override void OnInspectorGUI()
+            {
+                EditorGUILayout.BeginVertical();
+                {
+                    EditorGUI.BeginChangeCheck();
+                    {
+                        EditorGUILayout.PropertyField(m_pointA);
+                        EditorGUILayout.PropertyField(m_pointB);
+                        EditorGUILayout.PropertyField(m_lineColorA);
+                        EditorGUILayout.PropertyField(m_lineColorB);
+                        EditorGUILayout.PropertyField(m_lineThickness);
+                        EditorGUILayout.PropertyField(m_dottedLineLength);
+                        EditorGUILayout.PropertyField(m_dottedLineOffset);
+                        EditorGUILayout.PropertyField(m_backgroundColor);
+                        EditorGUILayout.PropertyField(m_lineTexture);
+                        EditorGUILayout.PropertyField(m_lineTextureTiling);
+                        EditorGUILayout.PropertyField(m_lineTextureOffset);
+                        EditorGUILayout.PropertyField(m_positionsAreLocalSpace);
+                        EditorGUILayout.PropertyField(m_autoApplyPositionChanges);
+                        EditorGUILayout.PropertyField(m_usesVectorialLineMaterial);
+                        EditorGUILayout.PropertyField(m_camera);
+                        EditorGUILayout.PropertyField(m_renderer);
+                        EditorGUILayout.LabelField(new GUIContent(Texts.PixelsPerUnit.text + (target as LineRenderer2D).PixelsPerUnit, Texts.PixelsPerUnit.tooltip));
+                    }
+                    if(EditorGUI.EndChangeCheck())
+                    {
+                        serializedObject.ApplyModifiedProperties();
+
+                        (target as LineRenderer2D).RefreshMaterial();
+                    }
+                }
+                EditorGUILayout.EndVertical();
+            }
         }
 
 #endif
