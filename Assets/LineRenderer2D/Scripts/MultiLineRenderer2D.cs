@@ -216,6 +216,7 @@ namespace Game.Core.Rendering
             m_LineColor = newLineColor;
 
             m_materialPropertyBlock.SetColor(ShaderParams.LineColor, m_LineColor);
+            m_Renderer.SetPropertyBlock(m_materialPropertyBlock);
         }
 
         /// <summary>
@@ -227,6 +228,7 @@ namespace Game.Core.Rendering
             m_LineThickness = newThickness;
 
             m_materialPropertyBlock.SetFloat(ShaderParams.Thickness, m_LineThickness);
+            m_Renderer.SetPropertyBlock(m_materialPropertyBlock);
         }
 
         /// <summary>
