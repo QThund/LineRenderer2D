@@ -166,7 +166,20 @@ Shader "Game/S_BresenhamLineRenderer2D"
                 if (_IsUnlit == 0.0f)
                 {
                     // Lighting
-                    finalColor = CombinedShapeLightShared(finalColor, maskColor, i.screenPos);
+                    SurfaceData2D surfaceData;
+                    InputData2D inputData;
+
+                    ZERO_INITIALIZE(InputData2D, inputData);
+
+                    surfaceData.albedo = finalColor.rgb;
+                    surfaceData.alpha = 1;
+                    surfaceData.mask = maskColor;
+
+                    // Initialize the inputData variable with the screen position
+                    inputData.uv = i.screenPos;
+
+                    // Use the inputData variable in the following line of code
+                    finalColor = half4(CombinedShapeLightShared(surfaceData, inputData).rgb, finalColor.a);
                 }
 
                 return finalColor;
