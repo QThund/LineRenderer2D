@@ -535,6 +535,30 @@ namespace Game.Core.Rendering
                 }
                 EditorGUILayout.EndVertical();
             }
+
+            protected void OnSceneGUI()
+            {
+                float handleSize = HandleUtility.GetHandleSize(Vector3.zero) * 0.1f;
+                Vector2 point;
+
+                for (int i = 0; i < m_points.arraySize; ++i)
+                {
+                    EditorGUI.BeginChangeCheck();
+                    {
+                        point = Handles.PositionHandle(m_points.GetArrayElementAtIndex(i).vector2Value, Quaternion.identity);
+                        Handles.Label(point + Vector2.down * handleSize, i.ToString());
+                    }
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        Undo.RecordObject(target, "Line point moved");
+
+                        MultiLineRenderer2D lineRenderer = target as MultiLineRenderer2D;
+                        lineRenderer.Points[i] = point;
+
+                        serializedObject.Update();
+                    }
+                }
+            }
         }
 
 #endif

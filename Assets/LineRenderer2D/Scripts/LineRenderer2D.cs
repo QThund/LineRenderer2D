@@ -519,6 +519,8 @@ namespace Game.Core.Rendering
             private static class Texts
             {
                 public static GUIContent PixelsPerUnit = new GUIContent("Pixels per unit: ", "The detected pixels per Unity spacial unit.");
+                public static GUIContent PointA = new GUIContent("A");
+                public static GUIContent PointB = new GUIContent("B");
             }
             
             protected SerializedProperty m_pointA;
@@ -590,6 +592,33 @@ namespace Game.Core.Rendering
                     }
                 }
                 EditorGUILayout.EndVertical();
+            }
+
+            protected void OnSceneGUI()
+            {
+                float handleSize = HandleUtility.GetHandleSize(Vector3.zero) * 0.1f;
+
+                Vector2 pointA;
+                Vector2 pointB;
+
+                EditorGUI.BeginChangeCheck();
+                {
+                    pointA = Handles.PositionHandle(m_pointA.vector2Value, Quaternion.identity);
+                    pointB = Handles.PositionHandle(m_pointB.vector2Value, Quaternion.identity);
+
+                    Handles.Label(pointA + Vector2.down * handleSize, Texts.PointA);
+                    Handles.Label(pointB + Vector2.down * handleSize, Texts.PointB);
+                }
+                if(EditorGUI.EndChangeCheck())
+                {
+                    Undo.RecordObject(target, "Line point moved");
+
+                    LineRenderer2D lineRenderer = target as LineRenderer2D;
+                    lineRenderer.PointA = pointA;
+                    lineRenderer.PointB = pointB;
+
+                    serializedObject.Update();
+                }
             }
         }
 
