@@ -457,6 +457,7 @@ namespace Game.Core.Rendering
                     }
                     if (EditorGUI.EndChangeCheck())
                     {
+                        (target as MultiLineRenderer2D).ApplyLayoutChanges();
                         (target as MultiLineRenderer2D).ApplyPointPositionChanges();
                         hasChanges = true;
                     }
