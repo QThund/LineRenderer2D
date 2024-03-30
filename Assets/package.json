@@ -1,6 +1,6 @@
 {
   "name": "com.silicon-heart.line-renderer-2d",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "Line Renderer 2D",
   "description": "Draws pixel-perfect lines calculated in the GPU on a SpriteRenderer.",
   "unity": "2020.3",
