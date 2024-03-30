@@ -1087,8 +1087,6 @@
         "m_GuidSerialized": "c7bfdee1-9f96-4412-9485-9ecdeb4c759a"
     },
     "m_Name": "LineColorB",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Color_FFAC3745",
     "m_OverrideReferenceName": "_LineColorB",
     "m_GeneratePropertyBlock": true,
@@ -1456,8 +1454,6 @@
         "m_GuidSerialized": "bdf348ef-0df5-44a7-bb5c-8d880a9b573d"
     },
     "m_Name": "MainTexST",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector4_26055582316c45e3af37ccef47d3ed6b",
     "m_OverrideReferenceName": "_MainTex_ST",
     "m_GeneratePropertyBlock": true,
@@ -1537,8 +1533,6 @@
         "m_GuidSerialized": "8f33353a-1460-446f-9663-87807e10441b"
     },
     "m_Name": "PointA",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector2_6E155E6A",
     "m_OverrideReferenceName": "_PointA",
     "m_GeneratePropertyBlock": true,
@@ -2315,8 +2309,6 @@
         "m_GuidSerialized": "632c3a05-1e9d-452b-ac01-c2b50ebe84c0"
     },
     "m_Name": "BackgroundColor",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Color_90D47017",
     "m_OverrideReferenceName": "_BackgroundColor",
     "m_GeneratePropertyBlock": true,
@@ -2371,8 +2363,6 @@
         "m_GuidSerialized": "d5eb01d4-4305-4002-bded-cfadd4e716df"
     },
     "m_Name": "LineColorA",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Color_3644C05D",
     "m_OverrideReferenceName": "_LineColorA",
     "m_GeneratePropertyBlock": true,
@@ -2485,8 +2475,6 @@
         "m_GuidSerialized": "fe3267dc-793a-4eab-8a66-ab96f9c4e170"
     },
     "m_Name": "Thickness",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_C9934729",
     "m_OverrideReferenceName": "_Thickness",
     "m_GeneratePropertyBlock": true,
@@ -3672,8 +3660,6 @@
         "m_GuidSerialized": "22d16d42-e3de-42c1-b232-3b901cba806c"
     },
     "m_Name": "LineTexture",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Texture2D_9d4cd127c2f14c49aed016079534db03",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
@@ -3878,8 +3864,6 @@
         "m_GuidSerialized": "611a55f2-ddb8-45c2-b1e2-055e070c04d1"
     },
     "m_Name": "DottedLineLength",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_b2e6979d607640a0813fb0e9e583a362",
     "m_OverrideReferenceName": "_DottedLineLength",
     "m_GeneratePropertyBlock": true,
@@ -3927,8 +3911,6 @@
         "m_GuidSerialized": "f827e48c-c23f-47ed-a49f-f94396df02b4"
     },
     "m_Name": "PointB",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector2_7EE97908",
     "m_OverrideReferenceName": "_PointB",
     "m_GeneratePropertyBlock": true,
@@ -4599,8 +4581,6 @@
         "m_GuidSerialized": "bdd15eba-6ba3-44ab-b6fe-a96c89f9c750"
     },
     "m_Name": "MainTex",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Texture2D_D1D16593",
     "m_OverrideReferenceName": "_MainTex",
     "m_GeneratePropertyBlock": true,
@@ -4739,8 +4719,6 @@
         "m_GuidSerialized": "43f4e4d5-82f0-47d2-83f0-dba3a9f44575"
     },
     "m_Name": "DottedLineOffset",
-    "m_DefaultRefNameVersion": 0,
-    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_e5c584a09c9c4316ada0814b407924b5",
     "m_OverrideReferenceName": "_DottedLineOffset",
     "m_GeneratePropertyBlock": true,
