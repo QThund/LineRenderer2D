@@ -124,7 +124,7 @@ Shader "Game/S_BresenhamMultiLineRenderer2D"
 
             #include "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/CombinedShapeLightShared.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderVariablesFunctions.hlsl"
-            #include "Assets/LineRenderer2D/Shaders/S_BresenhamMultiLine.hlsl"
+            #include "S_BresenhamMultiLine.hlsl"
 
             float4 MainFragmentShader(Varyings i) : SV_TARGET
             {

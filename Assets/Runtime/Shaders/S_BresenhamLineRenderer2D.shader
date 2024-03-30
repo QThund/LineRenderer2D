@@ -132,7 +132,7 @@ Shader "Game/S_BresenhamLineRenderer2D"
 
             #include "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/CombinedShapeLightShared.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderVariablesFunctions.hlsl"
-            #include "Assets/LineRenderer2D/Shaders/S_BresenhamLine.hlsl"
+            #include "S_BresenhamLine.hlsl"
             
             float2 TransformToScreenSpace(float4 vInputPoint)
             {

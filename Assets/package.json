@@ -1,0 +1,25 @@
+{
+  "name": "com.silicon-heart.line-renderer-2d",
+  "version": "1.0.0",
+  "displayName": "Line Renderer 2D",
+  "description": "Draws pixel-perfect lines calculated in the GPU on a SpriteRenderer.",
+  "unity": "2020.3",
+  "documentationUrl": "https://www.jailbrokengame.com/2023/02/10/line-renderer-2d/",
+  "changelogUrl": "",
+  "licensesUrl": "https://github.com/QThund/LineRenderer2D?tab=MIT-1-ov-file#readme",
+  "dependencies": {
+    "com.unity.2d.sprite": "1.0.0",
+    "com.unity.render-pipelines.universal": "10.4.0"
+ },
+ "keywords": [
+    "LineRenderer",
+    "2D",
+    "Rendering",
+	"Pixel"
+  ],
+  "author": {
+    "name": "Silicon Heart Studio",
+    "email": "SiliconHeartStudio@gmail.com",
+    "url": "https://www.jailbrokengame.com"
+  }
+}
