@@ -431,7 +431,7 @@ namespace Game.Core.Rendering
             protected SerializedProperty m_camera;
             protected SerializedProperty m_renderer;
 
-            protected void OnEnable()
+            protected virtual void OnEnable()
             {
                 m_points = serializedObject.FindProperty("Points");
                 m_maxPoints = serializedObject.FindProperty("m_MaxPoints");
@@ -509,18 +509,7 @@ namespace Game.Core.Rendering
 
                     EditorGUI.BeginChangeCheck();
                     {
-                        // Auto apply position changes
-                        EditorGUILayout.PropertyField(m_autoApplyPositionChanges);
-                        // Camera
-                        EditorGUILayout.PropertyField(m_camera);
-                        // Renderer
-                        EditorGUILayout.PropertyField(m_renderer);
-                        // Pixels per unit
-                        EditorGUILayout.LabelField(new GUIContent(Texts.PixelsPerUnit.text + (target as MultiLineRenderer2D).m_pixelsPerUnit, Texts.PixelsPerUnit.tooltip));
-                        // Points count
-                        EditorGUILayout.LabelField(new GUIContent(Texts.PointsCount.text + (target as MultiLineRenderer2D).m_pointsCount, Texts.PointsCount.tooltip));
-                        // Packed points count
-                        EditorGUILayout.LabelField(new GUIContent(Texts.PackedPointsCount.text + (target as MultiLineRenderer2D).m_packedPointsCount, Texts.PackedPointsCount.tooltip));
+                        DrawProperties();
                     }
                     if (EditorGUI.EndChangeCheck())
                     {
@@ -535,6 +524,22 @@ namespace Game.Core.Rendering
                     }
                 }
                 EditorGUILayout.EndVertical();
+            }
+
+            protected virtual void DrawProperties()
+            {
+                // Auto apply position changes
+                EditorGUILayout.PropertyField(m_autoApplyPositionChanges);
+                // Camera
+                EditorGUILayout.PropertyField(m_camera);
+                // Renderer
+                EditorGUILayout.PropertyField(m_renderer);
+                // Pixels per unit
+                EditorGUILayout.LabelField(new GUIContent(Texts.PixelsPerUnit.text + (target as MultiLineRenderer2D).m_pixelsPerUnit, Texts.PixelsPerUnit.tooltip));
+                // Points count
+                EditorGUILayout.LabelField(new GUIContent(Texts.PointsCount.text + (target as MultiLineRenderer2D).m_pointsCount, Texts.PointsCount.tooltip));
+                // Packed points count
+                EditorGUILayout.LabelField(new GUIContent(Texts.PackedPointsCount.text + (target as MultiLineRenderer2D).m_packedPointsCount, Texts.PackedPointsCount.tooltip));
             }
 
             protected void OnSceneGUI()

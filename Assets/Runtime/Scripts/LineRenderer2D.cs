@@ -540,7 +540,7 @@ namespace Game.Core.Rendering
             protected SerializedProperty m_camera;
             protected SerializedProperty m_renderer;
 
-            protected void OnEnable()
+            protected virtual void OnEnable()
             {
                 m_pointA = serializedObject.FindProperty("PointA");
                 m_pointB = serializedObject.FindProperty("PointB");
@@ -566,23 +566,7 @@ namespace Game.Core.Rendering
                 {
                     EditorGUI.BeginChangeCheck();
                     {
-                        EditorGUILayout.PropertyField(m_pointA);
-                        EditorGUILayout.PropertyField(m_pointB);
-                        EditorGUILayout.PropertyField(m_lineColorA);
-                        EditorGUILayout.PropertyField(m_lineColorB);
-                        EditorGUILayout.PropertyField(m_lineThickness);
-                        EditorGUILayout.PropertyField(m_dottedLineLength);
-                        EditorGUILayout.PropertyField(m_dottedLineOffset);
-                        EditorGUILayout.PropertyField(m_backgroundColor);
-                        EditorGUILayout.PropertyField(m_lineTexture);
-                        EditorGUILayout.PropertyField(m_lineTextureTiling);
-                        EditorGUILayout.PropertyField(m_lineTextureOffset);
-                        EditorGUILayout.PropertyField(m_positionsAreLocalSpace);
-                        EditorGUILayout.PropertyField(m_autoApplyPositionChanges);
-                        EditorGUILayout.PropertyField(m_usesVectorialLineMaterial);
-                        EditorGUILayout.PropertyField(m_camera);
-                        EditorGUILayout.PropertyField(m_renderer);
-                        EditorGUILayout.LabelField(new GUIContent(Texts.PixelsPerUnit.text + (target as LineRenderer2D).PixelsPerUnit, Texts.PixelsPerUnit.tooltip));
+                        DrawProperties();
                     }
                     if(EditorGUI.EndChangeCheck())
                     {
@@ -592,6 +576,27 @@ namespace Game.Core.Rendering
                     }
                 }
                 EditorGUILayout.EndVertical();
+            }
+
+            protected virtual void DrawProperties()
+            {
+                EditorGUILayout.PropertyField(m_pointA);
+                EditorGUILayout.PropertyField(m_pointB);
+                EditorGUILayout.PropertyField(m_lineColorA);
+                EditorGUILayout.PropertyField(m_lineColorB);
+                EditorGUILayout.PropertyField(m_lineThickness);
+                EditorGUILayout.PropertyField(m_dottedLineLength);
+                EditorGUILayout.PropertyField(m_dottedLineOffset);
+                EditorGUILayout.PropertyField(m_backgroundColor);
+                EditorGUILayout.PropertyField(m_lineTexture);
+                EditorGUILayout.PropertyField(m_lineTextureTiling);
+                EditorGUILayout.PropertyField(m_lineTextureOffset);
+                EditorGUILayout.PropertyField(m_positionsAreLocalSpace);
+                EditorGUILayout.PropertyField(m_autoApplyPositionChanges);
+                EditorGUILayout.PropertyField(m_usesVectorialLineMaterial);
+                EditorGUILayout.PropertyField(m_camera);
+                EditorGUILayout.PropertyField(m_renderer);
+                EditorGUILayout.LabelField(new GUIContent(Texts.PixelsPerUnit.text + (target as LineRenderer2D).PixelsPerUnit, Texts.PixelsPerUnit.tooltip));
             }
 
             protected void OnSceneGUI()
