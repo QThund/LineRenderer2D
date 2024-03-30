@@ -131,11 +131,11 @@ namespace Game.Core.Rendering
 
                 if(!Application.isPlaying && m_editorCamera != null)
                 {
-                    return m_editorCamera.pixelHeight / ((int)m_editorCamera.orthographicSize * 2);
+                    return Mathf.CeilToInt(m_editorCamera.pixelHeight / (m_editorCamera.orthographicSize * 2));
                 }
 
 #endif
-                
+
                 return m_pixelsPerUnit;
             }
         }
