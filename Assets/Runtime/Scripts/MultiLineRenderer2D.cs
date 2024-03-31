@@ -149,6 +149,7 @@ namespace Game.Core.Rendering
 
             if (CurrentCamera != null)
             {
+                m_Renderer.GetPropertyBlock(m_materialPropertyBlock);
                 RefreshMaterial();
             }
         }
@@ -165,6 +166,7 @@ namespace Game.Core.Rendering
 
             if(CurrentCamera != null)
             {
+                m_Renderer.GetPropertyBlock(m_materialPropertyBlock);
                 RefreshMaterial();
             }
         }
@@ -355,8 +357,6 @@ namespace Game.Core.Rendering
 
         protected virtual void RefreshMaterial()
         {
-            m_Renderer.GetPropertyBlock(m_materialPropertyBlock);
-
             m_materialPropertyBlock.SetColor(ShaderParams.LineColor, m_LineColor);
             m_materialPropertyBlock.SetFloat(ShaderParams.Thickness, m_LineThickness);
             m_materialPropertyBlock.SetColor(ShaderParams.BackgroundColor, m_BackgroundColor);
