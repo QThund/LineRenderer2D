@@ -5,7 +5,7 @@
   "description": "Draws pixel-perfect lines calculated in the GPU on a SpriteRenderer.",
   "unity": "2020.3",
   "documentationUrl": "https://www.jailbrokengame.com/2023/02/10/line-renderer-2d/",
-  "changelogUrl": "https://discussions.unity.com/t/linerenderer2d-gpu-pixel-perfect-2d-line-renderer-for-unity-urp-2d-renderer/835131",
+  "changelogUrl": "https://discussions.unity.com/t/linerenderer2d-gpu-pixel-perfect-2d-line-renderer-for-unity-urp-2d-renderer/820473",
   "licensesUrl": "https://github.com/QThund/LineRenderer2D?tab=MIT-1-ov-file#readme",
   "dependencies": {
     "com.unity.2d.sprite": "1.0.0",
