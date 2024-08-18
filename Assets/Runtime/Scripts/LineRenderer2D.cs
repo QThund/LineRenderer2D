@@ -446,17 +446,15 @@ namespace Game.Core.Rendering
             }
 
             // This avoids the pixel blocks of the line to be cut-off
-            float MINIMUM_THICKNESS = PixelsPerUnit == 0 ? m_LineThickness 
+            float MINIMUM_THICKNESS = PixelsPerUnit == 0 ? m_LineThickness
                                                          : m_LineThickness / PixelsPerUnit;
+            MINIMUM_THICKNESS *= 1.6f; // Adjustment to make sure the width of the mesh is enough for all slopes
 
-            Vector4 worldBounds = Calculate2DWorldBoundingBox(PointA, PointB);
-            worldBounds.x -= MINIMUM_THICKNESS;
-            worldBounds.y += MINIMUM_THICKNESS;
-            worldBounds.z += 2 * MINIMUM_THICKNESS;
-            worldBounds.w += 2 * MINIMUM_THICKNESS;
-            transform.localScale = new Vector3(worldBounds.z, worldBounds.w, 1.0f);
-            transform.position = new Vector2(worldBounds.x + parentPosition.x, worldBounds.y + parentPosition.y);
-            transform.rotation = Quaternion.identity;
+            Vector2 lineDirection = (PointB - PointA).normalized;
+            Vector2 lineDirectionPerpendicular = Vector2.Perpendicular(lineDirection);
+            transform.localScale = new Vector3((PointA - PointB).magnitude + MINIMUM_THICKNESS * 2.0f, MINIMUM_THICKNESS * 2.0f, 1.0f);
+            transform.rotation = Quaternion.AngleAxis(Vector2.SignedAngle(lineDirection, Vector2.right), Vector3.back);
+            transform.position = parentPosition + PointA - lineDirection * MINIMUM_THICKNESS + lineDirectionPerpendicular * MINIMUM_THICKNESS;
 
             if (transform.parent != null)
             {
