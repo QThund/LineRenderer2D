@@ -9,3 +9,5 @@ It allows:
  -Local or world space points.
  -You can use either shadergraph version or standard shaders version.
  -Tested with DirectX and OpenGLCore.
+
+You can get the Pro version in the Unity Asset Store: https://assetstore.unity.com/packages/2d/linerenderer2d-pro-297007
